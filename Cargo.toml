@@ -30,5 +30,6 @@ description = "worksoup's formatting utilities"
 repository = "https://github.com/worksoup/wfu"
 keywords = ["format", "fmt", "utilities", "formatting", "display"]
 categories = ["value-formatting", "no-std"]
+license = "MIT"
 
 [dependencies]
