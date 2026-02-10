@@ -22,7 +22,7 @@
 
 [package]
 name = "wfu"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2024"
 authors = ["worksoup"]
 readme = "README.md"
@@ -30,6 +30,7 @@ description = "worksoup's formatting utilities"
 repository = "https://github.com/worksoup/wfu"
 keywords = ["format", "fmt", "utilities", "formatting", "display"]
 categories = ["value-formatting", "no-std"]
+documentation = "https://docs.rs/wfu"
 license = "MIT"
 
 [dependencies]
