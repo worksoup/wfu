@@ -20,6 +20,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+/// 通用格式化函数包装器
+///
+/// 这个结构体包装一个闭包，该闭包接收一个 [`Formatter`](::core::fmt::Formatter) 并返回格式化结果。
+/// 通过为 [`FmtFn`] 实现各种格式化特型（[`Display`](::core::fmt::Display)、[`Debug`](::core::fmt::Debug)、[`Binary`](::core::fmt::Binary) 等），
+/// 允许自定义的格式化逻辑通过统一的接口被调用。
+///
+/// # 类型参数
+/// - `F`: 闭包类型，必须实现 `for<'fmt> Fn(&mut Formatter<'fmt>) -> fmt::Result`
+///
+/// # 示例
+/// ```rust
+/// use wfu::FmtFn;
+///
+/// let value = 42;
+/// let wrapper = FmtFn(|f: &mut std::fmt::Formatter| write!(f, "The answer is: {}", value));
+///
+/// // 各种格式化输出只与闭包有关。
+/// assert_eq!(format!("{}", wrapper), "The answer is: 42");
+/// assert_eq!(format!("{:?}", wrapper), "The answer is: 42");
+/// ```
 #[derive(Clone, Copy)]
 pub struct FmtFn<F>(pub F);
 
