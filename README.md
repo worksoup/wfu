@@ -6,7 +6,7 @@
 
 ```toml
 [dependencies]
-wfu = "0.0.1"
+wfu = "0.0.3"
 ```
 
 ```rust

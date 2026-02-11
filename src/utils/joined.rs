@@ -34,9 +34,26 @@ where
     for<'a> <&'a Iter as ::core::iter::IntoIterator>::Item: ::core::fmt::Display,
     Delim: ::core::fmt::Display + ::core::marker::Copy,
 {
+    #[inline]
+    fn fmt(&self, data: &Iter, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+        CloneIterJoined(self.0).fmt(&data, f)
+    }
+}
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct CloneIterJoined<Delim>(pub Delim)
+where
+    Delim: ::core::fmt::Display;
+
+impl<Iter, Delim> FmtHandler<Iter> for CloneIterJoined<Delim>
+where
+    Iter: ::core::iter::IntoIterator + ::core::clone::Clone,
+    <Iter as ::core::iter::IntoIterator>::Item: ::core::fmt::Display,
+    Delim: ::core::fmt::Display + ::core::marker::Copy,
+{
     fn fmt(&self, data: &Iter, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         use ::core::fmt::Display;
-        let mut iter = data.into_iter();
+        let mut iter = data.clone().into_iter();
         let Some(first) = iter.next() else {
             return Ok(());
         };
@@ -76,6 +93,14 @@ mod tests {
         let proxy_single = single_vec.fmt_by(Joined(", "));
         assert_eq!(format!("{}", proxy_single), "42");
     }
+    #[test]
+    fn test_joined_proxy_ref() {
+        // 测试基础功能
+        let vec = vec!["a", "b", "c"];
+        let delim = ", ".to_string();
+        let proxy = vec.fmt_by(Joined(&delim));
+        assert_eq!(format!("{}", proxy), "a, b, c");
+    }
 
     /// 测试Joined与不同容器类型的兼容性
     #[test]
@@ -94,5 +119,10 @@ mod tests {
         let slice: &[&str] = &["x", "y", "z"];
         let proxy_slice = slice.fmt_by(Joined("-"));
         assert_eq!(format!("{}", proxy_slice), "x-y-z");
+
+        // 对于 &Iter 没有实现 IntoIterator 的类型，使用 CloneIterJoined.
+        let range = 1..5;
+        let proxy_range = range.fmt_by(CloneIterJoined("-"));
+        assert_eq!(format!("{}", proxy_range), "1-2-3-4");
     }
 }
