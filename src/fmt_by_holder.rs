@@ -151,7 +151,7 @@ impl<T: ::core::ops::Deref, D> ::core::convert::AsRef<T> for DerefHolder<T, D> {
 
 macro_rules! fmt_impl_for_fmt_by_holder {
     ($trait_name: path) => {
-        #[doc = concat!("为 [`FmtByHolder`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于调试输出。")]
+        #[doc = concat!("为 [`FmtByHolder`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于", stringify!($trait_name), "输出。")]
         impl<'a, T, D> $trait_name for TargetHolder<'a, T, D>
         where
             T: ?::core::marker::Sized,
@@ -167,7 +167,7 @@ macro_rules! fmt_impl_for_fmt_by_holder {
 
 macro_rules! fmt_impl_for_deref_holder {
     ($trait_name: path) => {
-        #[doc = concat!("为 [`DerefHolder`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于调试输出。")]
+        #[doc = concat!("为 [`DerefHolder`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于", stringify!($trait_name), "输出。")]
         impl< T, D> $trait_name for DerefHolder<T, D>
         where
             T: ::core::ops::Deref,

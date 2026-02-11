@@ -25,7 +25,7 @@ pub struct FmtFn<F>(pub F);
 
 macro_rules! fmt_impl_for_fmt_fn {
     ($trait_name: path) => {
-        #[doc = concat!("为 [`FmtFn`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于调试输出。")]
+        #[doc = concat!("为 [`FmtFn`] 实现 [`", stringify!($trait_name), "`](::core::fmt::", stringify!($trait_name), ") 格式化特型，使之可作用于", stringify!($trait_name), "输出。")]
         impl<F> $trait_name for FmtFn<F>
         where
             F: for<'fmt> Fn(&mut ::core::fmt::Formatter<'fmt>) -> ::core::fmt::Result,
