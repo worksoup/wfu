@@ -33,7 +33,7 @@ use crate::FmtHandler;
 ///
 /// # 示例
 /// ``` rust
-/// use wfu::{FmtBy, DebugMap};
+/// use wfu::{FmtAs, DebugMap};
 /// let mut map = std::collections::HashMap::new();
 /// map.insert("key1", 1);
 /// map.insert("key2", 2);
@@ -76,7 +76,7 @@ where
 ///
 /// # 示例
 /// ``` rust
-/// use wfu::{FmtBy, RefItemDebugMap};
+/// use wfu::{FmtAs, RefItemDebugMap};
 /// let map = vec![("key1", 1), ("key2", 2), ("key3", 3)];
 /// let proxy = map.fmt_as::<RefItemDebugMap>();
 /// assert_eq!(format!("{:?}", proxy), r#"{"key1": 1, "key2": 2, "key3": 3}"#);
@@ -145,7 +145,7 @@ mod tests {
     use std::collections::HashMap;
 
     use super::*;
-    use crate::FmtBy;
+    use crate::{FmtAs, FmtBy};
 
     #[test]
     fn test_debug_map() {

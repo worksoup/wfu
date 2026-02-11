@@ -186,7 +186,7 @@ crate::all_fmt_impl!(fmt_impl_for_deref_holder);
 
 #[cfg(test)]
 mod tests {
-    use crate::{FmtBy, FmtByHolder, Repeat, UpperHexProxy};
+    use crate::{FmtAs, FmtByHolder, Repeat, UpperHexProxy};
 
     #[test]
     fn test_chain_composition() {

@@ -60,7 +60,7 @@ impl<T: ?::core::marker::Sized + Fn(&mut ::core::fmt::Formatter<'_>) -> ::core::
 
 #[cfg(test)]
 mod tests {
-    use crate::FmtBy;
+    use crate::FmtAs;
 
     use super::*;
     #[test]
