@@ -20,12 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+mod debug_map;
 mod fmt_fn;
 mod joined;
 mod r#macro;
 mod proxy;
 mod repeat;
 
+pub use debug_map::*;
 pub use fmt_fn::*;
 pub use joined::*;
 pub use proxy::*;
