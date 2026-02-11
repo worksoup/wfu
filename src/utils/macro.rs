@@ -20,6 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! all_fmt_impl {
     ($macro_name: ident) => {
