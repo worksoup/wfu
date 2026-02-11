@@ -22,6 +22,23 @@
 
 use crate::FmtHandler;
 
+/// 用于连接迭代器元素的格式化处理器
+///
+/// 这个结构体是一个适配器，它通过引用来迭代集合（不会克隆集合）
+///
+/// # 类型参数
+/// - `Delim`: 分隔符类型，必须实现 [`Display`](::core::fmt::Display) 和 [`Copy`](::core::marker::Copy) ( 可以是引用 ) 特型。
+///
+/// # 示例
+/// ``` rust
+/// use wfu::{FmtBy, Joined};
+/// let vec = vec!["a", "b", "c"];
+/// let proxy = vec.fmt_by(Joined(", "));
+/// assert_eq!(format!("{}", proxy), "a, b, c");
+/// ```
+/// # 注意
+/// - 要求 &Iter 实现 [`IntoIterator`];
+/// - 对于 &Iter 没有实现 [`IntoIterator`] 的类型（如 [`Range`](::core::ops::Range)），请使用 [`CloneIterJoined`], 它要求 Iter 实现 [`Clone`].
 #[derive(Debug, Clone, Copy, Default)]
 pub struct Joined<Delim>(pub Delim)
 where
@@ -40,6 +57,23 @@ where
     }
 }
 
+/// 用于连接迭代器元素的格式化处理器，适用于需克隆才能迭代的类型（如 [`Range`](::core::ops::Range)）
+///
+/// 这个结构体是一个适配器，它通过克隆来迭代集合
+///
+/// # 类型参数
+/// - `Delim`: 分隔符类型，必须实现 [`Display`](::core::fmt::Display) 和 [`Copy`](::core::marker::Copy) ( 可以是引用 ) 特型。
+///
+/// # 示例
+/// ``` rust
+/// use wfu::{FmtBy, CloneIterJoined};
+/// let range = 1..5;
+/// let proxy = range.fmt_by(CloneIterJoined(", "));
+/// assert_eq!(format!("{}", proxy), "1, 2, 3, 4");
+/// ```
+/// # 注意
+/// - 要求 Iter 实现 [`Clone`];
+/// - 对于 &Iter 实现了 [`IntoIterator`] 的类型，可以使用 [`Joined`], 它不会克隆 Iter.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct CloneIterJoined<Delim>(pub Delim)
 where
@@ -68,9 +102,8 @@ where
 
 #[cfg(test)]
 mod tests {
-    use crate::FmtBy;
-
     use super::*;
+    use crate::FmtBy;
 
     #[test]
     fn test_joined_proxy() {
@@ -93,6 +126,7 @@ mod tests {
         let proxy_single = single_vec.fmt_by(Joined(", "));
         assert_eq!(format!("{}", proxy_single), "42");
     }
+
     #[test]
     fn test_joined_proxy_ref() {
         // 测试基础功能
